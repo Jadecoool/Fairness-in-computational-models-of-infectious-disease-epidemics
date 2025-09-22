@@ -14,7 +14,7 @@ epidemiology.
 
 # Repository structure
 ## Data
-The data folder contains the input data of the models, including the ordered social groups in London and unordered social groups in NYC.
+The `data/` folder contains the input data of the models, including the ordered social groups in London and unordered social groups in NYC.
 ## Code
 ### Calibration
 The calibration folder contains the codes for the SLIRD model for both cases of ordered social groups in London and unordered social groups in NYC. It also contains the code for ABC-SMC algorithm to calibrate the models.
