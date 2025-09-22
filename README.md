@@ -17,6 +17,6 @@ epidemiology.
 The `data` folder contains the input data of the models, including the ordered social groups in London and unordered social groups in NYC.
 ## Code
 ### Calibration
-The calibration folder contains the codes for the SLIRD model for both cases of ordered social groups in London and unordered social groups in NYC. It also contains the code for ABC-SMC algorithm to calibrate the models.
+The `calibration` folder contains the codes for the SLIRD model for both cases of ordered social groups in London and unordered social groups in NYC. It also contains the code for ABC-SMC algorithm to calibrate the models. Inside `calibration`, the `posteriors` folder contains the posterior distributions of models' parameters and the calibrated epidemic trajectories.
 ### Simulation
-The simulation folder contains the codes for running scenarios of vaccine interventions.
+The `simulation` folder contains the codes for running scenarios of vaccine interventions. Inside `simulations`, the `results` folder contains the results under different scenarios.
