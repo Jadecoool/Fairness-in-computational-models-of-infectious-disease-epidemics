@@ -42,8 +42,8 @@ def run_cf(strategy: str,
     elif strategy == 'theil':
         removal_fractions = np.array([0.19134425, 0.35795191, 0.28247547, 0.16822836, 0])
     elif strategy == 'combine':
-        #removal_fractions = np.array([0.22675884, 0.42130029, 0.23249578, 0.11944509, 0]) # gamma =1
-        removal_fractions = np.array([0.27545968, 0.36098201, 0.22974655, 0.13381176, 0]) # gamma =0.5
+        removal_fractions = np.array([0.22675884, 0.42130029, 0.23249578, 0.11944509, 0]) # gamma =1
+        #removal_fractions = np.array([0.27545968, 0.36098201, 0.22974655, 0.13381176, 0]) # gamma =0.5
 
     print('target number', int(np.sum(Nk[:-1]) * 0.2))
 
@@ -85,5 +85,7 @@ def run_cf(strategy: str,
     np.savez_compressed(f"./simulations/cf_intervention/{strategy}_gamma05_intervention_races_weekly_deaths_frac{total_remove_frac}_it{iterations}_seed{seed}.npz", results_intervention_races)
 
 
+# example for running
+# the input for 'strategy' should be 'pop' or 'theil' or 'combine'
+run_cf(strategy='combine', iterations=10000, remove_day=1, total_remove_frac = 0.2, gamma = 1)
 
-run_cf(strategy='combine', iterations=10000, remove_day=1, total_remove_frac = 0.2)
