@@ -11,7 +11,12 @@ consistent capacity to assess model fairness across diverse disease dynamics. Su
 of fairness can be incorporated into the design of immunization strategies to enhance health equity while simultaneously
 improving overall effectiveness. Together, our results offer a systematic methodology for quantifying fairness in computational
 epidemiology.
-## Calibration
-The calibration folder contains the codes of ABC-SMC algorithm and the SLIRD model for the cases of ordered social groups in London and unordered social groups in NYC.
-## Simulation
+
+# Repository structure
+## Data
+The data folder contains the input data of the models, including the ordered social groups in London and unordered social groups in NYC.
+## Code
+### Calibration
+The calibration folder contains the codes for the SLIRD model for both cases of ordered social groups in London and unordered social groups in NYC. It also contains the code for ABC-SMC algorithm to calibrate the models.
+### Simulation
 The simulation folder contains the codes for running scenarios of vaccine interventions.
