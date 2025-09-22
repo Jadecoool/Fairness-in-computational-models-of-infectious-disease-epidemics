@@ -2,6 +2,7 @@
 - `SEIR_model_general.py` is the code for SLIRD model
 - `functions_general.py` contains the functions needed for `SEIR_model_general.py`
 - `abcsmc_general.py` is the code for ABC-SMC calibration
+- `posteriors` folder contains the posterior distributions of paramters and calibrated results
 
 ## Running the Code
 The main script for running the calibration process is not included in this repository. To run it, please create a script as in the example below:
