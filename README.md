@@ -13,6 +13,7 @@ improving overall effectiveness. Together, our results offer a systematic method
 epidemiology.
 
 # Repository structure
+We provide the main code for the models, calibration, and simulations of vaccine intervention scenarios.
 ## Data
 The `data` folder contains the input data of the models, including the ordered social groups in London and unordered social groups in NYC.
 ## Code
