@@ -12,23 +12,23 @@ import pandas as pd
 import yaml
 
 def load_config(config_dir):
-    """加载所有配置参数
+    """loading config
     Args:
-        config_dir (str): 配置文件目录
+        config_dir (str): file path
     Returns:
-        dict: 包含所有配置参数的字典
+        dict: dictionary including all config
     """
     config_path = os.path.join(config_dir)
     with open(config_path, 'r', encoding='utf-8') as f:
         config = yaml.safe_load(f)
 
-    # 处理日期字符串
+    # dealing with date string
 
     for date_field in ['start_org_date', 'start_simu_date', 'end_date']:
         if date_field in config['simulation']:
             config['simulation'][date_field] = pd.to_datetime(config['simulation'][date_field])
 
-    # 展平配置字典
+    # flatten
     flat_config = {}
     for category, params in config.items():
         if isinstance(params, dict):
@@ -39,17 +39,15 @@ def load_config(config_dir):
     return flat_config
 
 def wmape_pyabc(sim_data: dict, actual_data: dict) -> float:
-    """计算WMAPE"""
     return np.sum(np.abs(actual_data['data'] - sim_data['data'])) / np.sum(np.abs(actual_data['data']))
 
 def create_folder(country):
-    """创建必要的文件夹"""
+    """make sure folders exist"""
     base_path = f"./calibration_runs/{country}"
     if not os.path.exists(base_path):
         os.makedirs(os.path.join(base_path, 'abc_history'), exist_ok=True)
         os.makedirs(os.path.join(base_path, 'dbs'), exist_ok=True)
 
-    # 创建posteriors相关文件夹
     posteriors_dirs = ['pos', 'deaths', 'infections']
     for dir_name in posteriors_dirs:
         os.makedirs(f"./posteriors/{dir_name}", exist_ok=True)
@@ -57,7 +55,6 @@ def create_folder(country):
 
 def run_fullmodel(start_org_date, start_simu_date, end_date, i0,
                   R0, eps, mu, ifr, C, Delta, daily_steps, basin):
-    """运行完整SEIR模型"""
     results = SEIR(start_org_date=start_org_date,
                    start_simu_date=start_simu_date,
                    end_date=end_date,
@@ -82,7 +79,7 @@ def calibration(epimodel: Callable,
                 filename: str = '',
                 run_id=None,
                 db=None):
-    """运行ABC校准"""
+    """ABC-SMC calibration"""
     filename = filename+'_'+str(uuid.uuid4())
     print(f"Using filename: {filename}")
 
@@ -95,56 +92,31 @@ def calibration(epimodel: Callable,
             'weekly_infections_by_group': infections_by_group
         }
 
-    # 初始化ABC
+    # Initialize ABC-SMC
     abc = pyabc.ABCSMC(model, prior, distance,
                        transitions=transition,
                        population_size=population_size,
                        sampler=pyabc.sampler.SingleCoreSampler())
 
-    # 设置数据库
+    # Settting database
     if db is None:
         db_path = os.path.join(f'./calibration_runs/{basin_name}/dbs/', f"{filename}.db")
         abc.new("sqlite:///" + db_path, {"data": observations})
     else:
         abc.load(db, run_id)
 
-    # 运行ABC
+    # run ABC
     history = abc.run(minimum_epsilon=minimum_epsilon,
                       max_nr_populations=max_nr_populations,
                       max_walltime=max_walltime)
 
-    # 保存结果
+    # save results
     save_results(history, basin_name, filename)
 
     return history
 
 
 def save_results(history, basin_name, filename):
-    """保存结果到文件"""
-    # 保存历史记录
-    # history_path = os.path.join(f'./calibration_runs/{basin_name}/abc_history/',
-    #                             f"{filename}.pkl")
-    # with open(history_path, 'wb') as file:
-    #     pkl.dump(history, file)
-    #
-    # # 保存各类结果
-    # result_types = {
-    #     'pos': [lambda h: h.get_distribution()[0], 'csv'],
-    #     'deaths/weekly_deaths': [lambda h: np.array([d["data"] for d in h.get_weighted_sum_stats()[1]]), 'npz'],
-    #     'infections/weekly_infections': [
-    #         lambda h: np.array([d["weekly_infections"] for d in h.get_weighted_sum_stats()[1]]), 'npz'],
-    #     'deaths/group_weekly_deaths': [
-    #         lambda h: np.array([d["weekly_deaths_by_group"] for d in h.get_weighted_sum_stats()[1]]), 'npz'],
-    #     'infections/groop_weekly_infections': [
-    #         lambda h: np.array([d["weekly_infections_by_group"] for d in h.get_weighted_sum_stats()[1]]), 'npz']
-    # }
-    #
-    # for key, (data_func, format_type) in result_types.items():
-    #     path = f"./posteriors/{key}_{basin_name}_{filename}"
-    #     if format_type == 'csv':
-    #         data_func(history).to_csv(f"{path}.csv")
-    #     else:
-    #         np.savez_compressed(f"{path}.npz", data_func(history))
     with open(os.path.join(f'./calibration_runs/{basin_name}/abc_history/', f"{basin_name}_{filename}.pkl"), 'wb') as file:
         pkl.dump(history, file)
 
@@ -171,28 +143,28 @@ def save_results(history, basin_name, filename):
 def run_calibration(config_dir: str, contact_matrix_dir: str, ifr_dir: str, filename: str):
     """运行校准流程
     Args:
-        config_dir (str): 配置文件目录
+        config_dir (str)
     Returns:
-        pyabc.History: ABC校准历史记录
+        pyabc.History: ABC calibration history
     """
-    # 加载所有配置
+    # load config
     config = load_config(config_dir)
-    # 加载接触矩阵
+    # load contact matrix
     C = np.loadtxt(contact_matrix_dir, delimiter=',')
     ifr = np.loadtxt(ifr_dir, delimiter=',')
 
     create_folder(config['basin'])
 
-    # 导入国家数据
+    # load country data
     country_dict = import_country(config['basin'])
 
-    # 获取真实死亡数据
+    #  load real deaths
     deaths_real = country_dict["deaths"].loc[
         (country_dict["deaths"]["date"] >= config['start_simu_date'].strftime('%Y-%m-%d')) &
         (country_dict["deaths"]["date"] <= config['end_date'].strftime('%Y-%m-%d'))
         ]["total"].values
 
-    # 创建prior分布
+    # Prior
     prior = Distribution(
         R0=RV("uniform", config['R0_min'], config['R0_max'] - config['R0_min']),
         Delta=RV('rv_discrete', values=(
@@ -205,7 +177,6 @@ def run_calibration(config_dir: str, contact_matrix_dir: str, ifr_dir: str, file
         ))
     )
 
-    # 创建转换对象
     transition = pyabc.AggregatedTransition(
         mapping={
             'R0': pyabc.MultivariateNormalTransition(),
@@ -220,7 +191,7 @@ def run_calibration(config_dir: str, contact_matrix_dir: str, ifr_dir: str, file
         }
     )
 
-    # 运行校准
+    # run calibration
     history = calibration(
         run_fullmodel,
         prior=prior,
