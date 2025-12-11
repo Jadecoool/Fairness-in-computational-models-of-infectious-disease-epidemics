@@ -6,6 +6,22 @@ import os
 from load_config import load_config
 import matplotlib.pyplot as plt
 
+def load_config(config_dir):
+    config_path = os.path.join(config_dir)
+    with open(config_path, 'r', encoding='utf-8') as f:
+        config = yaml.safe_load(f)
+
+    for date_field in ['start_org_date', 'start_simu_date', 'end_date', 'end_date_2ndwave']:
+        if date_field in config['simulation']:
+            config['simulation'][date_field] = pd.to_datetime(config['simulation'][date_field])
+
+    flat_config = {}
+    for category, params in config.items():
+        if isinstance(params, dict):
+            flat_config.update(params)
+        else:
+            flat_config[category] = params
+    return flat_config
 
 def run_cf(strategy: str,
            iterations: int,
@@ -88,4 +104,5 @@ def run_cf(strategy: str,
 # example for running
 # the input for 'strategy' should be 'pop' or 'theil' or 'combine'
 run_cf(strategy='combine', iterations=10000, remove_day=1, total_remove_frac = 0.2, gamma = 1)
+
 
