@@ -1,5 +1,6 @@
-# Estimating behavioural relaxation induced by COVID-19 vaccines in the first months of their rollout
-Code for the paper "Fairness in computational models of infectious disease epidemics"
+# Fairness in infectious disease modeling
+Code for the paper "Fairness in infectious disease modeling"
+
 # Abstract
 Although the concept of fairness has been extensively examined within the domains of machine learning and artificial
 intelligence, it remains largely underexplored in the field of computational epidemic modeling. Nevertheless, such models exert
