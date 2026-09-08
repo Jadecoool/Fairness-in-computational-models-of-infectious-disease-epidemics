@@ -1,0 +1,30 @@
+{
+  "borough": "QN",
+  "label": "QN_prog0_sus0_hybrid",
+  "config": {
+    "prog_by_age": false,
+    "sus_age_specific": false,
+    "pop_type": "hybrid"
+  },
+  "total_pop": 2253857,
+  "age_data": {
+    "0-9": 264270,
+    "10-19": 229939,
+    "20-29": 305858,
+    "30-39": 339194,
+    "40-49": 294762,
+    "50-59": 307220,
+    "60-69": 261496,
+    "70-79": 144149,
+    "80+": 106969
+  },
+  "n_trials": 1000,
+  "n_completed": 100,
+  "top_k": 100,
+  "best_loss": 7635.751714972584,
+  "best_beta": 0.06940970293965582,
+  "best_pop_infected": 67,
+  "best_rel_death": 0.9533588644656523,
+  "calib_time_s": 3796.5,
+  "rerun_time_s": 410.2
+}

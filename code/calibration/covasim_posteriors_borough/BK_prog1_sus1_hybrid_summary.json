@@ -1,0 +1,30 @@
+{
+  "borough": "BK",
+  "label": "BK_prog1_sus1_hybrid",
+  "config": {
+    "prog_by_age": true,
+    "sus_age_specific": true,
+    "pop_type": "hybrid"
+  },
+  "total_pop": 2559903,
+  "age_data": {
+    "0-9": 347270,
+    "10-19": 282694,
+    "20-29": 388882,
+    "30-39": 428874,
+    "40-49": 314665,
+    "50-59": 290875,
+    "60-69": 255923,
+    "70-79": 145626,
+    "80+": 105094
+  },
+  "n_trials": 1000,
+  "n_completed": 100,
+  "top_k": 100,
+  "best_loss": 7056.831334833525,
+  "best_beta": 0.06817378609854563,
+  "best_pop_infected": 101,
+  "best_rel_death": 0.32353970259513565,
+  "calib_time_s": 3589.1,
+  "rerun_time_s": 401.1
+}

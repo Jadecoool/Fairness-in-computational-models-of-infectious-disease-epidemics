@@ -1,0 +1,30 @@
+{
+  "borough": "QN",
+  "label": "QN_prog0_sus0_random",
+  "config": {
+    "prog_by_age": false,
+    "sus_age_specific": false,
+    "pop_type": "random"
+  },
+  "total_pop": 2253857,
+  "age_data": {
+    "0-9": 264270,
+    "10-19": 229939,
+    "20-29": 305858,
+    "30-39": 339194,
+    "40-49": 294762,
+    "50-59": 307220,
+    "60-69": 261496,
+    "70-79": 144149,
+    "80+": 106969
+  },
+  "n_trials": 1000,
+  "n_completed": 100,
+  "top_k": 100,
+  "best_loss": 7005.451456914754,
+  "best_beta": 0.04451006064445954,
+  "best_pop_infected": 270,
+  "best_rel_death": 0.988279110914691,
+  "calib_time_s": 1813.9,
+  "rerun_time_s": 257.4
+}

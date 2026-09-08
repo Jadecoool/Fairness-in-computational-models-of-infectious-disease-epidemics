@@ -1,0 +1,30 @@
+{
+  "borough": "SI",
+  "label": "SI_prog0_sus0_random",
+  "config": {
+    "prog_by_age": false,
+    "sus_age_specific": false,
+    "pop_type": "random"
+  },
+  "total_pop": 476142,
+  "age_data": {
+    "0-9": 55693,
+    "10-19": 58733,
+    "20-29": 61255,
+    "30-39": 61428,
+    "40-49": 60750,
+    "50-59": 67198,
+    "60-69": 57659,
+    "70-79": 31665,
+    "80+": 21761
+  },
+  "n_trials": 1000,
+  "n_completed": 100,
+  "top_k": 100,
+  "best_loss": 109.99896174369404,
+  "best_beta": 0.03154570442178194,
+  "best_pop_infected": 257,
+  "best_rel_death": 0.771930653880846,
+  "calib_time_s": 1888.3,
+  "rerun_time_s": 265.8
+}

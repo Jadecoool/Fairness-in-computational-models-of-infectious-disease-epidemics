@@ -1,0 +1,30 @@
+{
+  "borough": "MN",
+  "label": "MN_prog0_sus0_hybrid",
+  "config": {
+    "prog_by_age": false,
+    "sus_age_specific": false,
+    "pop_type": "hybrid"
+  },
+  "total_pop": 1628706,
+  "age_data": {
+    "0-9": 140872,
+    "10-19": 125772,
+    "20-29": 297954,
+    "30-39": 304254,
+    "40-49": 203022,
+    "50-59": 191837,
+    "60-69": 169060,
+    "70-79": 111395,
+    "80+": 84540
+  },
+  "n_trials": 1000,
+  "n_completed": 100,
+  "top_k": 100,
+  "best_loss": 869.370451779765,
+  "best_beta": 0.03418811600758679,
+  "best_pop_infected": 495,
+  "best_rel_death": 0.7258936132324683,
+  "calib_time_s": 3548.2,
+  "rerun_time_s": 370.4
+}

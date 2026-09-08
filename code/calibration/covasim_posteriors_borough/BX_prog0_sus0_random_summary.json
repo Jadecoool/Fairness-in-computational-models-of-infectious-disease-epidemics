@@ -1,0 +1,30 @@
+{
+  "borough": "BX",
+  "label": "BX_prog0_sus0_random",
+  "config": {
+    "prog_by_age": false,
+    "sus_age_specific": false,
+    "pop_type": "random"
+  },
+  "total_pop": 1418207,
+  "age_data": {
+    "0-9": 199926,
+    "10-19": 186412,
+    "20-29": 219722,
+    "30-39": 201813,
+    "40-49": 170120,
+    "50-59": 176008,
+    "60-69": 134066,
+    "70-79": 74098,
+    "80+": 56042
+  },
+  "n_trials": 1000,
+  "n_completed": 100,
+  "top_k": 100,
+  "best_loss": 9522.540588925438,
+  "best_beta": 0.050973324961544046,
+  "best_pop_infected": 151,
+  "best_rel_death": 0.9846703970585946,
+  "calib_time_s": 1715.6,
+  "rerun_time_s": 218.0
+}

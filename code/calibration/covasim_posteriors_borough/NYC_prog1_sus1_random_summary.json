@@ -1,0 +1,30 @@
+{
+  "borough": "NYC",
+  "label": "NYC_prog1_sus1_random",
+  "config": {
+    "prog_by_age": true,
+    "sus_age_specific": true,
+    "pop_type": "random"
+  },
+  "total_pop": 8336816,
+  "age_data": {
+    "0-9": 1008031,
+    "10-19": 883550,
+    "20-29": 1273671,
+    "30-39": 1335563,
+    "40-49": 1043319,
+    "50-59": 1033138,
+    "60-69": 878204,
+    "70-79": 506934,
+    "80+": 374406
+  },
+  "n_trials": 1000,
+  "n_completed": 100,
+  "top_k": 100,
+  "best_loss": 74472.38505278043,
+  "best_beta": 0.05656444225991718,
+  "best_pop_infected": 300,
+  "best_rel_death": 0.27126134416126646,
+  "calib_time_s": 4208.1,
+  "rerun_time_s": 445.5
+}
