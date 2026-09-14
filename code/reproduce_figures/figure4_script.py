@@ -60,11 +60,6 @@ CONFIGS_THEIL = [
     ('prog1_sus1_hybrid', 'AgeProbs, HN'),
 ]
 
-
-# ══════════════════════════════════════════════
-# 1. Helper functions — RCI (Script 1)
-# ══════════════════════════════════════════════
-
 def load_population_8groups(pop_file):
     pop = pd.read_csv(pop_file, encoding='utf-8-sig')
     p = pop['population'].values
@@ -223,11 +218,6 @@ if __name__ == '__main__':
     theil_real = contribution_real.sum()
     print(f"Real data Theil Index: {theil_real:.4f}")
 
-    # ══════════════════════════════════════════
-    # Figure layout:
-    #   Left half  → 1 large panel (concentration curve)
-    #   Right half → 2×2 grid (Theil box plots)
-    # ══════════════════════════════════════════
 
     fig = plt.figure(figsize=(20, 9))
     gs = GridSpec(2, 4, figure=fig, wspace=0.45, hspace=0.45)
@@ -242,10 +232,6 @@ if __name__ == '__main__':
         fig.add_subplot(gs[1, 2]),  # bottom-left
         fig.add_subplot(gs[1, 3]),  # bottom-right
     ]
-
-    # ─────────────────────────────────────────
-    # LEFT PANEL: RCI Concentration Curve
-    # ─────────────────────────────────────────
 
     tab20c = plt.cm.tab20c
     colors_rci = [tab20c(1), '#4ecdc4', '#ff6b6b', tab20c(13)]
