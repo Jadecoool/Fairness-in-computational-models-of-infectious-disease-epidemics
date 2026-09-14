@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[2]
 
 def plot_org_vs_intervention_all_methods2(results_org_overall, results_org_races, results_intervention_overall,
                                           results_intervention_races,
-                                          start_date, end_date, title, model):
+                                          start_date, end_date, title, model, diff_start_week=0):
     Nk = pd.read_csv(ROOT / 'data' / 'regions' / region / 'demographic' / 'pop.csv')['population'].values
     df = pd.read_csv(ROOT / 'data' / 'regions' / region / 'epidemic' / 'weekly_deaths.csv')
     date_real = df.loc[(df["date"] >= start_date) & (df["date"] <= end_date)]["date"].values
@@ -32,8 +32,10 @@ def plot_org_vs_intervention_all_methods2(results_org_overall, results_org_races
         # diff_overall = ( sum( np.quantile(results_org_overall[method_idx], q=0.5, axis=0) )
         # - sum( np.quantile(results_intervention_overall[method_idx], q=0.5, axis=0) ) ) / sum( np.quantile(results_org_overall[method_idx], axis=0, q=0.5) )
 
-        diff_overall = (np.sum(results_org_overall[method_idx], axis=1) - np.sum(
-            results_intervention_overall[method_idx], axis=1)) / np.sum(results_org_overall[method_idx], axis=1)
+        # relative reduction is computed only from week diff_start_week onwards
+        org_overall = results_org_overall[method_idx][:, diff_start_week:]
+        intervention_overall = results_intervention_overall[method_idx][:, diff_start_week:]
+        diff_overall = (np.sum(org_overall, axis=1) - np.sum(intervention_overall, axis=1)) / np.sum(org_overall, axis=1)
         print('diff_overall shape:', diff_overall.shape)
         differences[method_name]['Overall'] = diff_overall
         print(
@@ -44,9 +46,9 @@ def plot_org_vs_intervention_all_methods2(results_org_overall, results_org_races
             # diff_race = ( sum( np.quantile(results_org_races[method_idx][:, race_idx, :], q=0.5, axis=0) )
             #  - sum( np.quantile(results_intervention_races[method_idx][:, race_idx, :], q=0.5, axis=0) ) ) / sum( np.quantile(results_org_races[method_idx][:, race_idx, :], axis=0, q=0.5) )
 
-            diff_race = (np.sum(results_org_races[method_idx][:, race_idx, :], axis=1) - np.sum(
-                results_intervention_races[method_idx][:, race_idx, :], axis=1)) / np.sum(
-                results_org_races[method_idx][:, race_idx, :], axis=1)
+            org_race = results_org_races[method_idx][:, race_idx, diff_start_week:]
+            intervention_race = results_intervention_races[method_idx][:, race_idx, diff_start_week:]
+            diff_race = (np.sum(org_race, axis=1) - np.sum(intervention_race, axis=1)) / np.sum(org_race, axis=1)
             print('diff_race shape:', diff_race.shape)
 
             # diff_race = (
@@ -180,49 +182,9 @@ def plot_org_vs_intervention_all_methods2(results_org_overall, results_org_races
     # fig.suptitle(title, fontsize=24, y=1.1)
     plt.tight_layout()
     plt.subplots_adjust(bottom=0.1, left=0.1)
-    plt.savefig(f'./figure5_{model}.png', dpi=300, bbox_inches='tight')
+    plt.savefig('./figure5.png', dpi=300, bbox_inches='tight')
     plt.show()
     
-region = 'NYC'
-results_intervention_overall_list = []
-results_intervention_races_list = []
-results_org_overall_list = []
-results_org_races_list = []
-
-base_path = ROOT / 'code' / 'simulation' / 'results'
-
-higher = '11'
-frac_intervention = 0.2
-frac_baseline = 0.0
-iterations = 1000
-seed = 1
-slice_start = 17
-model = 'assort-hom'
-interventions = ['pop_gammaNone', 'death_gammaNone', 'combine_gamma10', 'combine_gamma05']  # 'theil_gammaNone',
-
-
-def load(method, dtype, frac):
-    filename = f'higher{higher}_{method}_{dtype}_weekly_deaths_frac{frac}_it{iterations}_seed{seed}_model{model}.npz'
-    print(filename)
-    data = np.load(base_path / filename)['arr_0']
-
-
-    if dtype == 'overall':
-        return data[:, slice_start:]
-    else:  # races
-        return data[:, :, slice_start:]
-
-
-results_intervention_overall_list = [load(m, 'overall', frac_intervention) for m in interventions]
-results_intervention_races_list = [load(m, 'races', frac_intervention) for m in interventions]
-results_org_overall_list = [load('no_intervention_gammaNone', 'overall', frac_baseline) for _ in interventions]
-results_org_races_list = [load('no_intervention_gammaNone', 'races', frac_baseline) for _ in interventions]
-
-plot_org_vs_intervention_all_methods2(results_org_overall_list, results_org_races_list,
-                                      results_intervention_overall_list, results_intervention_races_list,
-                                      '2020-07-06', '2021-07-05', 'Second wave, mobility increased by 50%',
-                                      model + '_one_wave')
-
 region = 'NYC'
 results_intervention_overall_list = []
 results_intervention_races_list = []
@@ -260,4 +222,5 @@ results_org_races_list = [load('no_intervention_gammaNone', 'races', frac_baseli
 plot_org_vs_intervention_all_methods2(results_org_overall_list, results_org_races_list,
                                       results_intervention_overall_list, results_intervention_races_list,
                                       '2020-03-15', '2021-07-05', 'Two waves, mobility increased by 40%',
-                                      model + '_two_waves')
+                                      model + '_two_waves',
+                                      diff_start_week=17)  # skip the first wave (17 weeks, 2020-03-15 to 2020-07-05)
