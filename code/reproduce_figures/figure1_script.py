@@ -4,6 +4,9 @@ import matplotlib.pyplot as plt
 from matplotlib.gridspec import GridSpec
 from matplotlib.lines import Line2D
 from matplotlib.patches import Polygon
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def generate_synthetic_data(total_people=1000000, base_income=20000, n_groups=10,
@@ -46,8 +49,8 @@ def get_health_age(file_path):
 
 
 def plot_figure1(output_path='./figure1.png',
-                 data_dir='/data',
-                 posteriors_dir='/code/calibration/posteriors'):
+                 data_dir=ROOT / 'data',
+                 posteriors_dir=ROOT / 'code' / 'calibration' / 'posteriors'):
     group_sizes, incomes, death_rates, death_numbers, actual_death_rate = generate_synthetic_data()
     cumulative_population, health_concentration = calculate_concentration_curve(group_sizes, death_numbers)
 

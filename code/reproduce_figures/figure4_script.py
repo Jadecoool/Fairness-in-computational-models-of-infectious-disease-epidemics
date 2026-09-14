@@ -11,6 +11,9 @@ from matplotlib.patches import Patch
 from matplotlib.gridspec import GridSpec
 from itertools import combinations
 from scipy import stats
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 AGE_LABELS = ['0-17', '18-24', '25-34', '35-44',
@@ -31,17 +34,20 @@ SIM_END   = '2020-07-05'
 FIT_START = '2020-03-15'
 N_DRAWS   = 100
 
-POP_FILE       = r'..\..\data\regions\NYC\demographic\pop_age.csv'
-REAL_DATA_PATH = r'..\..\data\regions\NYC\epidemic\weekly_death_byage.csv'
+BASE = ROOT / 'code' / 'calibration' / 'covasim_posteriors_borough'
+DATA = ROOT / 'data' / 'regions'
+
+POP_FILE       = DATA / 'NYC' / 'demographic' / 'pop_age.csv'
+REAL_DATA_PATH = DATA / 'NYC' / 'epidemic' / 'weekly_death_byage.csv'
 
 MODELS_RCI = [
-    (r'..\covasim_posteriors_borough\BORO_AGG_prog0_sus0_random_trajectories_by_age_weekly.npz',
+    (BASE / 'BORO_AGG_prog0_sus0_random_trajectories_by_age_weekly.npz',
      'HomProbs, RN', True),
-    (r'..\covasim_posteriors_borough\BORO_AGG_prog1_sus1_random_trajectories_by_age_weekly.npz',
+    (BASE / 'BORO_AGG_prog1_sus1_random_trajectories_by_age_weekly.npz',
      'AgeProbs, RN', True),
-    (r'..\covasim_posteriors_borough\BORO_AGG_prog0_sus0_hybrid_trajectories_by_age_weekly.npz',
+    (BASE / 'BORO_AGG_prog0_sus0_hybrid_trajectories_by_age_weekly.npz',
      'HomProbs, HN', True),
-    (r'..\covasim_posteriors_borough\BORO_AGG_prog1_sus1_hybrid_trajectories_by_age_weekly.npz',
+    (BASE / 'BORO_AGG_prog1_sus1_hybrid_trajectories_by_age_weekly.npz',
      'AgeProbs, HN', True),
 ]
 
@@ -53,9 +59,6 @@ CONFIGS_THEIL = [
     ('prog0_sus0_hybrid', 'HomProbs, HN'),
     ('prog1_sus1_hybrid', 'AgeProbs, HN'),
 ]
-
-BASE = r'..\covasim_posteriors_borough'
-DATA = r'..\..\data\regions'
 
 
 # ══════════════════════════════════════════════
@@ -365,7 +368,7 @@ if __name__ == '__main__':
                loc='lower center', bbox_to_anchor=(0.72, 0.47), #bbox_to_anchor=(0.72, -0.02),
                ncol=2, frameon=False, fontsize=16)
 
-    plt.savefig('combined_rci_theil.png', dpi=300, bbox_inches='tight')
+    plt.savefig('figure4.png', dpi=300, bbox_inches='tight')
     plt.show()
 
     print(f"\n{'='*80}")
@@ -407,4 +410,4 @@ if __name__ == '__main__':
         sig = '***' if p_val < 0.001 else ('**' if p_val < 0.01 else ('*' if p_val < 0.05 else 'ns'))
         print(f'{m1} vs {m2}: t={t_stat:.4f}, p={p_val:.4e} {sig}')
 
-    print("\nSaved: combined_rci_theil.png")
+    print("\nSaved: figure4.png")

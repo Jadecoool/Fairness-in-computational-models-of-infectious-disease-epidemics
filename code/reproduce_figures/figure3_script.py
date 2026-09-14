@@ -4,6 +4,9 @@ import matplotlib.colors as colors
 import numpy as np
 import pandas as pd
 from matplotlib.gridspec import GridSpec
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def calculate_contribution_theil_index(samples_total_deaths_by_race, populations):
@@ -19,9 +22,9 @@ def calculate_contribution_theil_index(samples_total_deaths_by_race, populations
     return contributions
 
 
-def plot_figure3(output_path='/mnt/user-data/outputs/figure3.png',
-                 data_dir='/data'):
-    st = gpd.read_file(f"{data_dir}/regions/Santiago/shp/santiago.shp")
+def plot_figure3(output_path='./figure3.png',
+                 data_dir=ROOT / 'data'):
+    st = gpd.read_file(f"{data_dir}/shp/shp/santiago.shp")
     df = pd.read_csv(f'{data_dir}/regions/Santiago/simulated_deaths_cases_new.csv')
     df['cases_rate'] = df['real_cases'] / df['popul'] * 1000
     rate_map = dict(zip(df['comuna'], df['cases_rate']))

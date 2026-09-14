@@ -2,6 +2,9 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.patches import Patch
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def get_sample_total_deaths_by_race(death_sim):
@@ -23,8 +26,8 @@ def calculate_contribution_theil_index(samples_total_deaths_by_race, populations
 
 
 def plot_figure2(output_path='./figure2.png',
-                 data_dir='/data',
-                 posteriors_dir='/code/calibration/posteriors'):
+                 data_dir=ROOT / 'data',
+                 posteriors_dir=ROOT / 'code' / 'calibration' / 'posteriors'):
     data = pd.read_csv(f'{data_dir}/regions/NYC/epidemic/weekly_death_byrace.csv', index_col=False)
     data3_date = data.loc[(data['date'] >= '2020-03-14') & (data['date'] <= '2020-07-05')]
     data3_date = data3_date.copy()
