@@ -41,7 +41,7 @@ The `data/regions` folder contains the model inputs for each region. Depending o
 - `epidemic`: reported weekly deaths (in total, by race and by age) and infection fatality rates (`IFR_*.csv`)
 - `restriction`: daily reductions of contacts derived from mobility data
 
-The NYC borough folders contain population by age and weekly deaths for each borough. The `Santiago` folder contains real and simulated cases by comuna together with the Human Development Index, and `data/shp` contains the corresponding shapefile. The `Colombia` folder contains model projections for the 2016 Zika outbreak.
+The NYC borough folders contain population by age and weekly deaths for each borough. The `Santiago` folder contains real and simulated cases by comuna together with the Human Development Index, and `data/shp` contains the corresponding shapefile. The `Colombia` folder contains model outcomes for the 2016 Zika outbreak.
 
 ## Code
 ### Calibration
