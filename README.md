@@ -60,11 +60,6 @@ The `code/reproduce_figures` folder contains one script for each figure of the p
 ```
 python code/reproduce_figures/figure1_script.py
 ```
-- Figure 1: fairness framework and age-related fairness of the models in London
-- Figure 2: race/ethnicity-related fairness of the models in NYC (Theil index)
-- Figure 3: spatial fairness of the models in Santiago
-- Figure 4: fairness of the agent-based models across age groups and NYC boroughs
-- Figure 5: vaccine intervention strategies in NYC; the printed relative reduction in deaths is computed over the second wave only
 
 ### Libraries
 The code requires `numpy`, `pandas`, `scipy`, `matplotlib` and `pyyaml`. In addition, `pyabc` is needed for the ABC-SMC calibration, `covasim` and `optuna` for the agent-based model, and `geopandas` for Figure 3.
