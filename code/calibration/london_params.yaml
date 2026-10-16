@@ -1,0 +1,23 @@
+model_params:
+  R0_min: 1.5
+  R0_max: 6.0
+  Delta_min: 7
+  Delta_max: 35
+  i0_min: 1
+  i0_max: 10000
+  eps: 0.27027027
+  mu: 0.4
+
+abc_params:
+  population_size: 1000
+  max_nr_populations: 10
+  max_walltime_hours: 240
+  minimum_epsilon: 0.3
+  p_stay: 0.7
+
+simulation:
+  start_org_date: "2020-02-15"
+  start_simu_date: "2020-03-15"
+  end_date: "2020-07-05"
+  daily_steps: 12
+  basin: "London"
